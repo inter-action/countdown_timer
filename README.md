@@ -4,8 +4,14 @@ only mac os is supported.
 
 installation:
 
+download compiled binary:
+
+https://github.com/inter-action/countdown_timer/releases/tag/v0.0.1
+
+or from src:
     git clone .
     make install
+
 
 usage:
 
