@@ -8,7 +8,10 @@ download compiled binary:
 
 https://github.com/inter-action/countdown_timer/releases/tag/v0.0.1
 
+then manually copy it to /usr/local/bin
+
 or from src:
+
     git clone .
     make install
 
