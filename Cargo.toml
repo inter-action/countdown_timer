@@ -1,0 +1,8 @@
+[package]
+name = "ctimer"
+version = "0.1.0"
+authors = ["miao jing <243127395@qq.com>"]
+
+[dependencies]
+clap = "2.25.0"
+notify-rust = "3"
