@@ -10,7 +10,7 @@ use std::time::Duration;
 #[cfg(target_os = "macos")]
 static SOUND: &'static str = "Ping";
 
-fn main() {
+fn main() -> Result<(), Box<std::error::Error>> {
     let matches = App::new("ctimer")
         .version(crate_version!())
         .usage("ctimer [mins]")
@@ -24,20 +24,25 @@ fn main() {
         .get_matches();
 
     if let Some(mins) = matches.value_of("mins") {
-        let cmins = Duration::from_secs(mins.parse::<u64>().unwrap() * 60);
+        let cmins = Duration::from_secs(mins.parse::<u64>()? * 60);
         let child = thread::spawn(move || {
             thread::sleep(cmins);
         });
         println!("count down for {} mins", mins);
         child.join().unwrap();
-        notify().unwrap();
+        notify()?;
     }
+    Ok(())
 }
 
-fn notify() -> Result<notify_rust::NotificationHandle, notify_rust::Error> {
+// why not return type auto inference is supported?
+// so we don't have to specify the return type & redudant map call
+fn notify() -> Result<(), Box<std::error::Error>> {
     Notification::new()
         .summary("timer done")
         .sound_name(SOUND)
         .timeout(5 * 1000)
         .show()
+        .map(|_| ())
+        .map_err(|e| e.into())
 }
